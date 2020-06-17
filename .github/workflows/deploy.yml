@@ -1,0 +1,31 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  builds:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 13.10
+        uses: actions/setup-node@v1
+        with:
+          node-version: '13-10'
+      - name: Install npm and run unittest
+        run: |
+          npm install
+          npm run test
+        env:
+          CI: true
+      - name: Publis to Github Packages Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with: dancastillo/github-actions-tutorial/myapp:dev
+        registry: docker.pkg.github.com
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        dockerfile: Dockerfile
+        tags: latest
