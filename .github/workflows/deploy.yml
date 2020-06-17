@@ -25,26 +25,14 @@ jobs:
       with:
         name: dancastillo/github-actions-tutorial/myapp:prod
         registry: docker.pkg.github.com
-        username: ${{ secrets.USERNAME }}
+        username: ${{ secrets.GH_USERNAME }}
         password: ${{ secrets.GITHUB_TOKEN }}
 #        tags: latest
     - name: Deploy package to digitalocean
-      uses: appleboy/ssh-action@master
-      env:
-        USERNAME: ${{ secrets.USERNAME }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        host: ${{ secrets.DIGITAL_OCEAN_HOST }}
-        username: ${{ secrets.DIGITAL_OCEAN_USERNAME }}
-        password: ${{ secrets.DIGITAL_OCEAN_PASSWORD }}
-        port: ${{ secrets.DIGITAL_OCEAN_PORT }}
-        envs: USERNAME, GITHUB_TOKEN
-        script_stop: true
-        script: |
-          whoami
-          ls -a
-#        script: |
-#          docker stop $(docker ps -a -q)
-#          docker login docker.pkg.github.com -u $USERNAME -p $GITHUB_TOKEN
-#          docker pull docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:prod
-#          docker run -dit -p 80:80 docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:prod
+      uses: appleboy/ssh-action@master 
+      with: 
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: whoami
