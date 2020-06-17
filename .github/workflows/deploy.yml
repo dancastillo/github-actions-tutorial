@@ -31,16 +31,16 @@ jobs:
     - name: Deploy package to digitalocean
       uses: appleboy/ssh-action@master
       env:
-        GITHUB_USERNAME: ${{ secrets.USERNAME }}
+        USERNAME: ${{ secrets.USERNAME }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         host: ${{ secrets.DIGITAL_OCEAN_HOST }}
         username: ${{ secrets.DIGITAL_OCEAN_USERNAME }}
         password: ${{ secrets.DIGITAL_OCEAN_PASSWORD }}
         port: ${{ secrets.DIGITAL_OCEAN_PORT }}
-        envs: GITHUB_USERNAME, GITHUB_TOKEN
+        envs: USERNAME, GITHUB_TOKEN
         script: |
           docker stop $(docker ps -a -q)
-          docker login docker.pkg.github.com -u $GITHUB_USERNAME -p $GITHUB_TOKEN
-          docker pull docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:prod:latest
-          docker run -dit -p 80:80 docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:prod:latest
+          docker login docker.pkg.github.com -u $USERNAME -p $GITHUB_TOKEN
+          docker pull docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:prod
+          docker run -dit -p 80:80 docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:prod
