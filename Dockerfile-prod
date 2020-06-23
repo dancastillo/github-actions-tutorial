@@ -1,8 +1,8 @@
 FROM node:13.1-alpine as build
 
-COPY * /usr/src/app/
-ENTRYPOINT ["/usr/src/app"]
+COPY package*.json ./
 RUN npm cache verify && npm doctor
+COPY . ./
 RUN npm install && npm run build
 
 # Stage - Production
