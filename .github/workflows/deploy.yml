@@ -27,7 +27,7 @@ jobs:
         registry: docker.pkg.github.com
         username: ${{ secrets.GH_USERNAME }}
         password: ${{ secrets.GITHUB_TOKEN }}
-#        tags: latest
+        tags: latest
     - name: Deploy package to digitalocean
       uses: appleboy/ssh-action@master
       env:
@@ -42,5 +42,5 @@ jobs:
         script: |
           docker stop $(docker ps -a -q)
           docker login -u $GITHUB_USERNAME -p $GITHUB_TOKEN docker.pkg.github.com
-          docker pull docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:prod
-          docker run -d -p 80:80 docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:prod
+          docker pull docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:latest
+          docker run -d -p 80:80 docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:latest
