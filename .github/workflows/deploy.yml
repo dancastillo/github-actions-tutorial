@@ -41,6 +41,6 @@ jobs:
         envs: GITHUB_USERNAME, GITHUB_TOKEN
         script: |
           docker stop $(docker ps -a -q)
-          docker login -u GITHUB_USERNAME -p $GITHUB_TOKEN docker.pkg.github.com
+          docker login -u $GITHUB_USERNAME -p $GITHUB_TOKEN docker.pkg.github.com
           docker pull docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:prod
           docker run -d -p 8080:80 docker.pkg.github.com/dancastillo/github-actions-tutorial/myapp:prod
