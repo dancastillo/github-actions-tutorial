@@ -1,6 +1,7 @@
 FROM node:13.1-alpine as build
 
 WORKDIR /usr/src/app
+RUN touch test.txt
 COPY package*.json ./
 RUN npm cache verify && npm doctor
 COPY . ./
